@@ -23,7 +23,7 @@ pipeline {
         stage("Build docker image")  {
             steps {
                 script {
-                    builder = docker.build("${image_name}")
+                    builder = docker.build("${image_name}") --no-cache
                 }
             }
         }
@@ -64,6 +64,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(
+                                        sourceFiles: 'test.txt'
                                         execCommand: "cd /home/devaja/app; docker-compose up -d",
                                         execTimeout: 1200000
                                     )
