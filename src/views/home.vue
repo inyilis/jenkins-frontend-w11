@@ -7,7 +7,7 @@
         </div>
         <div class="col-9 col-md-7 d-flex justify-content-between">
           <h5 class="mt-2"> Hi, {{ getAuth.name }}</h5>
-          <h2 class="font-weight-bold">Food Menu</h2>
+          <h2 class="font-weight-bold">Food Menus</h2>
           <h1></h1>
         </div>
         <div class="col-12 col-md-4 d-flex justify-content-end">
