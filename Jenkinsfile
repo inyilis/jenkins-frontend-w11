@@ -64,7 +64,6 @@ pipeline {
                                     verbose: true,
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: 'test.txt',
                                             execCommand: "cd /home/devaja/app; docker-compose up -d",
                                             execTimeout: 1200000
                                         )
