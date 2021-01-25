@@ -8,7 +8,6 @@ pipeline {
 
     parameters {
         string(name: 'DOCKERHUB', defaultValue: "${image_name}", description: 'by Inyilis Punya')
-        booleanParam(name: 'DELIMAGE', defaultValue: 'false', description: 'Delete image')
         booleanParam(name: 'RUNTEST', defaultValue: 'false', description: 'Testing image')
         choice(name: 'DEPLOY', choices: ['yes', 'no'], description: 'Build pakai param')
     }
@@ -18,18 +17,6 @@ pipeline {
             steps {
                 nodejs("node14") {
                     sh 'npm install'
-                }
-            }
-        }
-        stage("Remove docker image")  {
-            when {
-                expression {
-                    params.DELIMAGE
-                }
-            }
-            steps {
-                script {
-                    sh "sudo docker rmi -f ${image_name}"
                 }
             }
         }
