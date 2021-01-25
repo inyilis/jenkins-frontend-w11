@@ -20,10 +20,17 @@ pipeline {
                 }
             }
         }
+        stage("Remove docker image")  {
+            steps {
+                script {
+                    sh "sudo docker rmi -f ${image_name}"
+                }
+            }
+        }
         stage("Build docker image")  {
             steps {
                 script {
-                    builder = docker.build("${image_name}") 
+                    builder = docker.build("--no-cache","${image_name}") 
                 }
             }
         }
@@ -60,15 +67,31 @@ pipeline {
                         sshPublisher (
                             publishers: [
                                 sshPublisherDesc(
-                                configName: 'DevAja',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(
-                                        sourceFiles: 'test.txt',
-                                        execCommand: "cd /home/devaja/app; docker-compose up -d",
-                                        execTimeout: 1200000
-                                    )
-                                ] 
+                                    configName: 'DevAja',
+                                    verbose: true,
+                                    transfers: [
+                                        sshTransfer(
+                                            sourceFiles: 'test.txt',
+                                            execCommand: "cd /home/devaja/app; docker-compose up -d",
+                                            execTimeout: 1200000
+                                        )
+                                    ] 
+                                )
+                            ]
+                        )
+                    }
+                    if(BRANCH_NAME == 'main'){
+                        sshPublisher (
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: 'ProdAja',
+                                    verbose: true,
+                                    transfers: [
+                                        sshTransfer(
+                                            execCommand: "cd /home/prodaja/app; docker-compose up -d",
+                                            execTimeout: 1200000
+                                        )
+                                    ] 
                                 )
                             ]
                         )
