@@ -65,7 +65,7 @@ pipeline {
                                     transfers: [
                                         sshTransfer(
                                             sourceFiles: 'hallo.txt',
-                                            execCommand: "cd /home/devaja/app; docker-compose up -d",
+                                            execCommand: "docker pull ${image_name}; cd /home/devaja/app; docker-compose up -d",
                                             execTimeout: 1200000
                                         )
                                     ] 
@@ -81,7 +81,7 @@ pipeline {
                                     verbose: true,
                                     transfers: [
                                         sshTransfer(
-                                            execCommand: "cd /home/prodaja/app; docker-compose up -d",
+                                            execCommand: "docker pull ${image_name}; cd /home/prodaja/app; docker-compose up -d",
                                             execTimeout: 1200000
                                         )
                                     ] 
